@@ -1,0 +1,40 @@
+﻿@model Page
+
+@{
+    ViewData["Title"] = "Create a Page";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-controller="Pages" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label for="Title" class="form-label">Title</label>
+                    <input type="text" id="Title" name="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Content" class="form-label">Content</label>
+                    <textarea id="Content" name="Content" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" />
+                    <label class="form-check-label" for="IsActive">Is Active</label>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-controller="Pages" asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

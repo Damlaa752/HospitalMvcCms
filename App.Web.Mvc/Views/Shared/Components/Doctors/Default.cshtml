@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Department>
+
+@foreach (Department item in Model.OrderBy(x => x.Name))
+{
+    <li class="dropdown dropdown-submenu dropleft">
+        <a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Name</a>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdown0501">
+            @foreach (var dr in item.Doctors.OrderBy(x => x.FullName))
+            {
+                <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Detail" asp-route-id="@dr.Id">@dr.FullName</a></li>
+            }
+        </ul>
+    </li>
+}

@@ -1,0 +1,27 @@
+﻿@model Role
+
+@{
+    ViewData["Title"] = "Create a Role";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form asp-controller="Roles" asp-action="Create" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label for="RoleName" class="form-label">Role Name</label>
+                    <input type="text" id="RoleName" name="RoleName" class="form-control" asp-for="RoleName" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-controller="Roles" asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

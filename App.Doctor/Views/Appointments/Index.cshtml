@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Appointment>
+
+@{
+    ViewData["Title"] = "Appointment";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Appointments List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Appointments" asp-action="Create">Create New Appointments</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+            <p class="fw-bold text-bg-dark"><i> You can see all Appointments in this area...</i> </p>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Full Name</th>
+                            <th>Department</th>
+                            <th>Doctor</th>
+                            <th>AppointmentDate</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Full Name</th>
+                            <th>Department</th>
+                            <th>Doctor</th>
+                            <th>AppointmentDate</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+
+                    <tbody>
+                        @foreach (var appointment in Model)
+                        {
+                            <tr>
+                                <td>@appointment.Id</td>
+                                <td>@appointment.FullName</td>
+                                <td>@appointment.Department?.Name</td>
+                                <td>@appointment.Doctor?.FullName</td>
+                                <td>@appointment.AppointmentDate</td>
+                                <td>@appointment.Email</td>
+                                <td>@appointment.Message</td>
+                                <td>@appointment.Phone</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@appointment.Id">Edit</a>                                   
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

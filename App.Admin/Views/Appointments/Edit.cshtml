@@ -1,0 +1,65 @@
+﻿@model Appointment
+
+@{
+    ViewData["Title"] = "Edit Appointment";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="FullName" class="form-label">Full Name</label>
+                        <input type="text" id="FullName" name="FullName" class="form-control" asp-for="FullName" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="DepartmentId" class="form-label">Doctor</label>
+                        <select id="DepartmentId" name="DepartmentId" class="form-select" asp-items="ViewBag.DepartmentId" asp-for="DepartmentId"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="DoctorId" class="form-label">Doctor</label>
+                        <select id="DoctorId" name="DoctorId" class="form-select" asp-items="ViewBag.DoctorId" asp-for="DoctorId"></select>
+                    </div>
+                </div>
+
+        
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="AppointmentDate" class="form-label">Appointment Date and Time</label>
+                        <input type="datetime-local" id="AppointmentDate" name="AppointmentDate" class="form-control" asp-for="AppointmentDate" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+                    
+                </div>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" id="Email" name="Email" class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label for="Message" class="form-label">Message</label>
+                        <textarea id="Message" name="Message" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Phone" class="form-label">Phone</label>
+                        <input type="text" id="Phone" name="Phone" class="form-control" asp-for="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+               
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

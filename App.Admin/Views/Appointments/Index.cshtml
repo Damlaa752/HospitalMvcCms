@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Appointment>
+
+@{
+    ViewData["Title"] = "Appointment";
+}
+
+
+
+<div class="container-fluid">
+    <h1 class="mt-4">Appointments List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Appointments" asp-action="Create">Create New Appointment</a>
+
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+            <p class="fw-bold text-bg-dark"><i>You can see all Appointments in this area...</i></p>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Appointment DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Full Name</th>
+                        <th>Department</th>
+                        <th>Doctor</th>
+                        <th>AppointmentDate</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model)
+                    {
+                        <tr>
+                            <td>@appointment.Id</td>
+                            <td>@appointment.FullName</td>
+                            <td>@appointment.Department?.Name</td>
+                            <td>@appointment.Doctor?.FullName</td>
+                            <td>@appointment.AppointmentDate</td>
+                            <td>@appointment.Email</td>
+                            <td>@appointment.Message</td>
+                            <td>@appointment.Phone</td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@appointment.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@appointment.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

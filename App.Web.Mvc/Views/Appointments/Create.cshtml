@@ -1,0 +1,153 @@
+﻿@model Appointment
+
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+<section class="appoinment section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="mt-3">
+                    <div class="feature-icon mb-3">
+                        <i class="icofont-support text-lg"></i>
+                    </div>
+                    <span class="h3">Call for an Emergency Things!</span>
+                    <h2 class="text-color mt-3">+84 789 1256 </h2>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+                    <h2 class="mb-2 title-color">Choose a Department</h2>
+                    <p class="mb-4">Choose your doctor!</p>
+                    <form id="#" class="appoinment-form" method="post" asp-controller="Appointments" asp-action="Create">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label asp-for="DepartmentId" class="form-label">Department</label>
+                                    <select id="departmentList" name="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId">
+                                        <option>Select Department</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label asp-for="DoctorId" class="form-label">Doctor</label>
+                                    <select id="doctorList" name="DoctorId" class="form-control">
+                                        <option value="-1">Select Doctor</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="AppointmentDate" class="form-label">Appointment Date and Time</label>
+                                    <input type="datetime-local" id="AppointmentDate" name="AppointmentDate" class="form-control">
+                                    <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="Email" class="form-label">Email</label>
+                                    <input type="email" id="Email" name="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="FullName" class="form-label">Full Name</label>
+                                    <input type="text" id="FullName" name="FullName" class="form-control" />
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label asp-for="Phone" class="form-label">Phone</label>
+                                    <input type="text" id="Phone" name="Phone" class="form-control" />
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-2 mb-4">
+                            <label asp-for="Message" class="form-label">Message</label>
+                            <textarea id="Message" name="Message" class="form-control" rows="5">Your Message</textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <button class="btn btn-main btn-round-full" type="submit">Make Appoinment<i class="icofont-simple-right ml-2"></i></button>
+                    </form>
+
+                    <!-- Bu noktadan sonraki script kodları ile Doktorları Poliklinik listesine göre yüklemek hedeflenir... -->
+                    @section Scripts{
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#departmentList").change(function () {
+                                    $("#doctorList").empty();
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: 'http://localhost:5280/Appointments/LoadDoctor',
+
+
+                                        dataType: 'Json',
+
+                                        data: { departmentId: $("#departmentList").val() },
+
+                                        success: function (doctors) {
+                                            $("#doctorList").append('<option value ="' + -1 + '">' + "Select Doctor" + '</option>');
+
+                                            $.each(doctors, function (i, doctor) {
+                                                $("#doctorList").append('<option value="' + doctor.value + '">' + doctor.text + '</option>')
+                                            });
+                                        },
+
+                                        error: function () {
+                                            alert('Somethings going to wrong and we do not know actually... Yeah')
+                                        }
+
+                                    });
+
+                                    return false;
+                                })
+                            })
+                        </script>
+                    }
+                   @*  @section Scripts{
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#departmentList").change(function () {
+                                    $("#doctorList").empty();
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: 'http://localhost:5280/Appointments/LoadDoctor',
+
+
+                                        dataType: 'Json',
+
+                                        data: { departmentId: $("#departmentList").val() },
+
+                                        success: function (doctors) {
+                                            $("#doctorList").append('<option value ="' + -1 + '">' + "Select Doctor" + '</option>');
+
+                                            $.each(doctors, function (i, doctor) {
+                                                $("#doctorList").append('<option value="' + doctor.value + '">' + doctor.text + '</option>')
+                                            });
+                                        },
+
+                                        error: function () {
+                                            alert('Somethings going to wrong and we do not know actually... Yeah')
+                                        }
+
+                                    });
+
+                                    return false;
+                                })
+                            })
+                        </script>
+                    } *@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

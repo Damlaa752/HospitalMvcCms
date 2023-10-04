@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Post>
+
+@{
+    ViewData["Title"] = "Posts";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Posts List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Posts" asp-action="Create">Create New Post</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+            <p class="fw-bold text-bg-dark"><i> You can see all Posts in this area...</i> </p>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Posts DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Comments</th>
+                        <th>PostImage</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var post in Model)
+                    {
+                        <tr>
+                            <td>@post.Id</td>
+                            <td>@post.Title</td>
+                            <td>
+                                @if (post.Content.Length > 100)
+                                {
+                                    <span>@post.Content.Substring(0, 100)...</span>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#contentModal_@post.Id">Read More</a>
+                                    <div class="modal fade" id="contentModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="contentModalLabel">@post.Title</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @post.Content
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @post.Content
+                                }
+                            </td>
+                            <td>@post.Comments?.Count</td>
+                            <td>
+                                <img src="/Images/@post.Image" alt="" class="img-fluid rounded-circle" style="max-height:75px;" />
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@post.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@post.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Department>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Departments List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Departments" asp-action="Create">Create New Department</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+            <p class="fw-bold text-bg-dark"><i> You can see all departments in this area...</i> </p>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Departments List DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var departments in Model)
+                    {
+                        <tr>
+                            <td>@departments.Id</td>
+                            <td>@departments.Name</td>
+                            <td>
+                                @if (departments.Description.Length > 100)
+                                {
+                                    <span>@departments.Description.Substring(0, 100)...</span>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal_@departments.Id">Read More</a>
+                                    <div class="modal fade" id="descriptionModal_@departments.Id" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="descriptionModalLabel">@departments.Name</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @departments.Description
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @departments.Description
+                                }
+                            </td>
+
+                            <td><img src="/Images/@departments.Image" class="img-fluid rounded-circle" style="max-height: 75px;" /></td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@departments.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@departments.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

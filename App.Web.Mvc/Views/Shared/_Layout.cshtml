@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neova Hospital || @ViewData["Title"]</title>
+    <link rel="icon" type="image/x-icon" href="~/hospitaltemplate/images/favicon.png" />
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
+
+    <link rel="stylesheet" href="~/App.Web.Mvc.styles.css" asp-append-version="true" />
+
+    <link href="~/hospitaltemplate/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/hospitaltemplate/plugins/icofont/icofont.css" rel="stylesheet" />
+
+    <link href="~/hospitaltemplate/plugins/icofont/icofont.min.css" rel="stylesheet" />
+
+    <link href="~/hospitaltemplate/plugins/slick-carousel/slick/slick.css" rel="stylesheet" />
+
+    <link href="~/hospitaltemplate/plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet" />
+
+    <link href="~/hospitaltemplate/css/style.css" rel="stylesheet" />
+
+@*     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+</head>
+<body id="top">
+    <header>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <partial name="_Topbar" />
+        <partial name="_Header" />
+
+    </header>
+    @* <div class="container-fluid">*@
+    @*<main role="main" class="pb-3">*@
+
+    @Html.Raw(TempData["Message"]) @*Html.Raw(<İçerik>) = Dilediğimiz Html ogesini şekilli ve efektli haliyle görmemizi sağlar. *@
+    @RenderBody()
+    @*</main>*@
+    @*  </div>*@
+    @*Bu manevra bize 51 yıla mal olacak...*@
+    <partial name="_Footer" />
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+    <script src="~/hospitaltemplate/plugins/jquery/jquery.js" defer></script>
+    <script src="~/hospitaltemplate/plugins/bootstrap/bootstrap.min.js" defer></script>
+    <script src="~/hospitaltemplate/plugins/slick-carousel/slick/slick.min.js" defer></script>
+    <script src="~/hospitaltemplate/plugins/slick-carousel/slick/slick.js" defer></script>
+    <script src="~/hospitaltemplate/plugins/shuffle/shuffle.min.js" defer></script>
+    <script src="~/hospitaltemplate/plugins/google-map/gmap.js" defer></script>
+
+    <script src="~/hospitaltemplate/js/script.js" defer></script> @* defer komutu ile, sayfa yüklendikten sonra script ogelerinin yüklenmeye başlamasını sağlayabiliriz. Böylelikle sayfa, önce HTML, ardından CSS, son olarak JavaScript  "defer" yerine "async" yazarak da sayfa ile eşzamanlı hareket etmesini sağlayabiliriz. *@
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>

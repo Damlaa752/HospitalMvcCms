@@ -1,0 +1,71 @@
+﻿@model Doctors
+
+@{
+    ViewData["Title"] = "Add a Doctor";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="FullName" class="form-label">Full Name</label>
+                        <input type="text" id="FullName" name="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="DepartmentId" class="form-label">Department</label>
+                        <select id="DepartmentId" name="DepartmentId" class="form-select" asp-items="ViewBag.DepartmentId"></select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Image" class="form-label">Image</label>
+                    <input type="file" id="Image" name="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="City" class="form-label">City</label>
+                        <input type="text" id="City" name="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Phone" class="form-label">Phone</label>
+                        <input type="text" id="Phone" name="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="email" id="Email" name="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Password" class="form-label">Password</label>
+                    <input type="password" id="Password" name="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Specialty" class="form-label">Specialty</label>
+                    <textarea id="Specialty" name="Specialty" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Specialty" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

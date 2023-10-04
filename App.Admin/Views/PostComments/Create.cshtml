@@ -1,0 +1,42 @@
+﻿@model PostComment
+
+@{
+    ViewData["Title"] = "Create a Post Comment";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-controller="PostComments" asp-action="Create" enctype="multipart/form-data" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label for="UserId" class="form-label">User</label>
+                    <select id="UserId" name="UserId" class="form-select" asp-items="ViewBag.UserId"></select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="PostId" class="form-label">Post</label>
+                    <select id="PostId" name="PostId" class="form-select" asp-items="ViewBag.PostId"></select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Comment" class="form-label">Comment</label>
+                    <textarea type="text" id="Comment" name="Comment" class="form-control" asp-for="Comment"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" />
+                    <label class="form-check-label" for="IsActive">Is Active</label>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-controller="PostComments" asp-action="Index" class="btn btn-outline-dark">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

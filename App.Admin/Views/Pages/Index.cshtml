@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Page>
+
+@{
+    ViewData["Title"] = "Pages";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Pages List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Pages" asp-action="Create">Create New Page</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+
+            <p class="fw-bold text-bg-dark"><i> You can see all Pages in this area...</i> </p>
+
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Pages DataTable 
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>IsActive</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pages in Model)
+                    {
+                        <tr>
+                            <td>@pages.Id</td>
+                            <td>@pages.Title</td>
+                            <td>@pages.Content</td>
+                            <td>
+                                @Html.DisplayFor(Pages => pages.IsActive)
+
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@pages.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@pages.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

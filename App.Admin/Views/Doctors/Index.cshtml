@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Doctors>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Doctors List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Doctors" asp-action="Create">Create New Doctor</a>
+
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+            <p class="fw-bold text-bg-dark"><i>You can see all Doctors in this area...</i></p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Doctors DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple" class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>FullName</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>Specialty</th>
+                        <th>Phone</th>
+                        <th>Patients</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <td>@doctor.Id</td>
+                            <td>@doctor.FullName</td>
+                            <td>
+                                @if (doctor.Department != null)
+                                {
+                                    @doctor.Department.Name
+
+                                }
+                                else
+                                {
+                                   <div class="alert alert-danger" >Add a Department Please! </div>
+                                }
+                            </td>
+                            <td>@doctor.Email</td>
+                            <td>@doctor.City</td>
+                            <td>@doctor.Specialty</td>
+                            <td>@doctor.Phone</td>
+                            <td>
+                                @if (doctor.Patients != null && doctor.Patients.Count > 0)
+                                {
+                                    <button type="button" class="btn btn-outline-secondary ms-auto" data-bs-toggle="modal" data-bs-target="#patientsModal_@doctor.Id">
+                                        Show Patients
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span>No Patients</span>
+                                }
+                                <!-- Modal for Patients -->
+                                <div class="modal fade" id="patientsModal_@doctor.Id" tabindex="-1" role="dialog" aria-labelledby="patientsModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="patientsModalLabel">Patients for @doctor.Email</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @if (doctor.Patients != null && doctor.Patients.Count > 0)
+                                                {
+                                                    foreach (var patient in doctor.Patients)
+                                                    {
+                                                        <div>@patient.FullName</div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div>No Patients found for this doctor.</div>
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@doctor.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@doctor.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

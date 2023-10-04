@@ -1,0 +1,32 @@
+﻿@model DepartmentPost
+
+@{
+    ViewData["Title"] = "Create Department Post";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="PostId" class="form-label">Select a Post</label>
+                    <select asp-for="PostId" class="form-select" asp-items="ViewBag.PostId"></select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DepartmentId" class="form-label">Select a Department</label>
+                    <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.DepartmentId"></select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Setting>
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Settings List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="Settings" asp-action="Create">Create New Setting</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+
+            <p class="fw-bold text-bg-dark"><i>You can see all Settings in this area...</i> </p>
+
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Settings DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Setting Id</th>
+                        <th>Setting Name</th>
+                        <th>Site Email</th>
+                        <th>Site Address</th>
+                        <th>Site Phone</th>
+                        <th>Site Logo</th>
+                        <th>Linkedins</th>
+                        <th>IsActive</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var setting in Model)
+                    {
+                        <tr>
+                            <td>@setting.Id</td>
+                            <td>@setting.Name</td>
+                            <td>@setting.Email</td>
+                            <td>@setting.Address</td>
+                            <td>@setting.Phone</td>
+                            <td><img src="@setting.Image" alt="Logo" class="logo-img" /></td>
+                            <td>
+                                <li>
+                                    <a href="@setting.AlpLinkedin" title="Alp's LinkedIn Profile"><i class="fab fa-linkedin"></i> Alparslan</a>
+                                </li>
+                                <li>
+                                    <a href="@setting.KadirLinkedin" title="Kadir's LinkedIn Profile"><i class="fab fa-linkedin"></i> Kadir</a>
+                                </li>
+                                <li>
+                                    <a href="@setting.UtkuLinkedin" title="Utku's LinkedIn Profile"><i class="fab fa-linkedin"></i> Utku</a>
+                                </li>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Setting => setting.IsActive)
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@setting.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@setting.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

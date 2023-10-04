@@ -1,0 +1,100 @@
+﻿@model IEnumerable<PostComment>
+
+@{
+    ViewData["Title"] = "PostComments";
+}
+
+
+<div class="container-fluid">
+    <h1 class="mt-4 ">Post Comments List</h1>
+    <a class="btn btn-outline-success mt-2 ms-1 mb-2" asp-controller="PostComments" asp-action="Create">Create New Post Comment</a>
+    <div class="card mb-4">
+        <div class="card-body text-center bg-dark text-bg-dark">
+
+            <p class="fw-bold text-bg-dark"><i> You can see all post comments in this area...</i> </p>
+
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Post Comments DataTable
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Post.Title</th>
+                        <th>User Name</th>
+                        <th>Comment</th>
+                        <th>@Html.DisplayNameFor(PostComment => PostComment.IsActive)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var postComment in Model)
+                    {
+                        <tr>
+                            <td>@postComment.Id</td>
+                            <td>@postComment.Post?.Title</td>
+                            <td>@postComment.User?.FullName</td>
+                            <td>
+                                @if (postComment.Comment.Length > 100)
+                                {
+                                    <span>@postComment.Comment.Substring(0, 100)...</span>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal_@postComment.Id">Read More</a>
+                                    <div class="modal fade" id="descriptionModal_@postComment.Id" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="descriptionModalLabel">@postComment.User?.FullName</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @postComment.Comment
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @postComment.Comment
+                                }
+                            </td>
+                            
+                            <td>
+                                @Html.DisplayFor(PostComment => postComment.IsActive)
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a class="btn btn-primary me-1" asp-action="Edit" asp-route-id="@postComment.Id"><i class="fas fa-edit"></i> Edit</a>
+                                    <form asp-action="Remove" asp-route-id="@postComment.Id" method="post" onsubmit="return confirmDelete(this);">
+                                        <button type="submit" class="btn btn-danger" id="deleteButton"><i class="fas fa-trash"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function confirmDelete(formElement) {
+        var deleteButton = formElement.querySelector('button');
+
+        if (deleteButton.innerHTML === 'Sure?') {
+            return true;
+        } else {
+            deleteButton.innerHTML = 'Sure?';
+            return false;
+        }
+    }
+</script>

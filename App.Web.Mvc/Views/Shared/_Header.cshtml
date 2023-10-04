@@ -1,0 +1,60 @@
+﻿
+
+@******** Header   *********@
+
+<nav class="navbar navbar-expand-lg navigation" id="navbar">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+            <img src="~/hospitaltemplate/images/logo.png" />
+            
+        </a>
+
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain"
+                aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icofont-navigation-menu"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarmain">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="About">About</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="Services">Services</a></li>
+
+                <!-- Polikliniklerin listelendiği ve hizmetlere gidildiği kısım -->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" asp-controller="Department" id="dropdown02" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Department <i class="icofont-thin-down"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown02">
+                                <li><a class="dropdown-item" asp-controller="Department" asp-action="Index">Departments</a></li>
+                        @await Component.InvokeAsync("Departments")
+                        
+
+                        
+                    </ul>
+                </li>
+
+                <!-- Doktorların Polikliniklere Göre Listelendiği Kısım -->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" asp-controller="Doctor" id="dropdown03" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Our Team Members<i class="icofont-thin-down"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                                <li><a class="dropdown-item" asp-controller="Doctor" asp-action="Index">Doctors</a></li>
+                        @await Component.InvokeAsync("Doctors")
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" asp-controller="Blog"  id="dropdown05" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Blog <i class="icofont-thin-down"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown05">
+                        <li><a class="dropdown-item" asp-controller="Blog" asp-action="Index">Blog with Sidebar</a></li>
+                        <li><a class="dropdown-item"asp-controller="Blog" asp-action="Post" asp-route-id="1">Blog Single</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" asp-controller="contact" asp-action="Index">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
